@@ -21,6 +21,11 @@
             $fecha=$date;
             $hora=$hour;
         }
+
+        //solo para cargar clase
+        if (isset($_REQUEST['ahora'])) {
+            $ahora = $_REQUEST['ahora'];
+        }
         ?>
         
 <html lang="en">
@@ -62,7 +67,7 @@
          }
         ?>
         </div>
-        <div class="ahora"><a class="ahora-boton" href="menu.php?day=<?php echo $fecha; ?>&hour=<?php echo date('H:i:s', strtotime($hour. ' + 0 hours')); ?>">Ahora</a></div>
+        <div class="ahora <?php if(!isset($_REQUEST['day']) or isset($_REQUEST['ahora'])){echo "hora-selected";} ?>"><a class="ahora-boton" href="menu.php?day=<?php echo $fecha; ?>&hour=<?php echo date('H:i:s', strtotime($hour. ' + 0 hours')); ?>&ahora=1">Ahora</a></div>
         
         <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
    

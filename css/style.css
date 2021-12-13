@@ -732,6 +732,10 @@ body.salass {
     transform: scale(1.2);
 }
 
+.fecha-selected a {
+    background-color: #65ca36;
+}
+
 .horas-menu {
     position: absolute;
     top: 22%;
@@ -787,4 +791,8 @@ body.salass {
 
 .hora-selected {
     transform: scale(1.2);
+}
+
+.hora-selected a {
+    background-color: #65ca36;
 }
