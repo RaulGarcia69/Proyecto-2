@@ -766,6 +766,7 @@ body.salass {
     position: absolute;
     bottom: 15%;
     left: 8%;
+    transition: 0.5s;
 }
 
 .ahora:hover {
