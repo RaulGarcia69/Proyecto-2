@@ -21,12 +21,12 @@
   
             <div class="login flex-cv">
                 <form action="../services/login.php" method="POST"class="login-form shadow1">
-                    <label for="username">Correo</label>
-                    <input type="email" placeholder="ej. pepito@gmail.com" id="login_username" class="login-input_username" name="username">
-                    <label for="password">Contraseña</label>
-                    <input type="password" placeholder="Password" id="login_password" class="login-input_password" name="password">
-                    <span><input type="checkbox" name="showpass" onclick="showPass()"><label for="showpass">Mostrar contraseña</label></span>
-                    <input type="submit" name="enviar" value="enviar" id="login_btn_enviar" class="login-btn_enviar">
+                    <label for="username">Introduce el correo</label>
+                    <input type="email" placeholder="blumal@gmail.com" id="login_username" class="login-input_username" name="username">
+                    <label for="password">Introduce la contraseña</label>
+                    <input type="password" placeholder="1234" id="login_password" class="login-input_password" name="password">
+                    <span><input type="checkbox" name="showpass" onclick="showPass()"><label for="showpass" id="showpass-label">Mostrar contraseña</label></span>
+                    <input type="submit" name="enviar" value="Iniciar sesión" id="login_btn_enviar" class="login-btn_enviar">
                 </form>
                 
             </div>

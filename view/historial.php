@@ -20,7 +20,7 @@
 
 <body class="historial">
         <div class="atras"><a href="menu.php"><i class="far fa-arrow-alt-square-left"></i></a></div>
-        <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user"></i></a></div>
+        <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
 <?php 
     $reserva=$pdo->prepare("SELECT r.id_res, r.horaIni_res, r.horaFin_res, r.datos_res, u.nombre_use, m.id_mes, s.nombre_sal
     FROM tbl_reserva r
@@ -37,7 +37,6 @@
         <table class="table-reservas">
         <thead>
             <tr><form action="./historial.php" method="POST">
-                <th><input type="number" id="" name="id_res" placeholder="ID reserva"></th>
                 <th><input type="date" id="" name="horaIni_res" placeholder="Hora"></th>
                 <th><input type="date" id="" value="" name="horaFin_res" placeholder="Hora"></th>
                 <th><input type="text" id="" name="datos_res" placeholder="Nombre reserva"></th>
@@ -63,7 +62,8 @@
             ?>
                 <option value="<?php echo $reg['nombre_sal'];?>"><?php echo $reg['nombre_sal'];?></option>
             <?php } ?>
-            </select><input class="boton-filtro" type="submit" value="f002"></th> 
+            </select></th>
+            <th><input class="boton-filtro" type="submit" value="Filtrar"></th>
 
                 </form></tr>
 <?php
@@ -73,11 +73,6 @@
     INNER JOIN tbl_mesa m ON r.id_mes_fk=m.id_mes
     INNER JOIN tbl_sala s ON m.id_sal_fk=s.id_sal WHERE id_res LIKE '%%'";
 
-    if(isset($_POST['id_res'])){
-        $id_res = $_POST['id_res'];
-        $queryid_res = "AND r.id_res LIKE '%$id_res%'";
-        $queryGeneral = $queryGeneral.$queryid_res;
-    }
 
     if(isset($_POST['horaIni_res'])){
         $horaIni_res = $_POST['horaIni_res'];
@@ -120,25 +115,25 @@
         $data = $reserva->fetchAll(PDO::FETCH_ASSOC);
 ?>
                 <tr>
-                    <th>ID reserva</th>
                     <th>Inicio</th>
                     <th>Final</th>
                     <th>Nombre reserva</th>
                     <th>Responsable reserva</th>
                     <th>Mesa</th>
                     <th>Sala</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($data as $datas) { ?>
                 <tr>
-                    <td><?php echo $datas['id_res'] ?></td>
                     <td><?php echo $datas['horaIni_res'] ?></td>
                     <td><?php echo $datas['horaFin_res'] ?></td>
                     <td><?php echo $datas['datos_res'] ?></td>
                     <td><?php echo $datas['nombre_use'] ?></td>
                     <td><?php echo $datas['id_mes'] ?></td>
                     <td><?php echo $datas['nombre_sal'] ?></td>
+                    <td></td>
                 </tr>
 
                 <?php } ?>

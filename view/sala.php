@@ -7,6 +7,8 @@
         if(isset($_COOKIE["sala"])){
             $idsala = $_COOKIE["idsala"];
             $salas = $_COOKIE["sala"];
+            $date = date('Y-m-d');
+            $hour = date('H:i:s');
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +29,7 @@
 </head>
 <body class="salass">
         <div class="atras"><a href="menu.php"><i class="far fa-arrow-alt-square-left"></i></a></div>
-        <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user"></i></a></div>
+        <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
     <div class="region-mesas flex-cv <?php echo $salas;?>">
             
             <div class="grid-mesas">
@@ -92,7 +94,10 @@
     </div>
 
     <?php 
- 
+        $horas=$pdo->prepare("SELECT * from tbl_horas_reservas where hora_hor>?");
+        $horas->bindParam(1, $hour);
+        $horas->execute();
+        $horas=$horas->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="overlay" id="overlay">
         <div class="abrirReserva" id="abrirReserva">
@@ -101,9 +106,19 @@
                 <h3>Reservar mesa</h3>
                 <form METHOD='POST' class="crearReserva" action="../services/reservar-mesa.php">
                     <input type="hidden" id="idMesa" class="idMesa" name="idMesa">
-                    <label for="nombre">Nombre de la reserva</label>
+                    <label for="nombre">Nombre de reserva</label>
                     <input type="text" id="nombre" name="nombre">
-
+                    <input type="hidden" id="fecha" name="fecha" value="<?php echo $date; ?>">
+                    <label for="fecha">Hora final</label>
+                    <select name="hora_ini" class="select-horas">
+                        <?php
+                        foreach ($horas as $horas) {
+                        ?>
+                        <option value="<?php echo $horas['hora_hor']; ?>"><?php echo $horas['hora_hor']; ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                     <input type="submit" value="Reservar" class="btn">
                 </form>
             </div>
@@ -113,14 +128,11 @@
         <div class="cerrarReserva" id="cerrarReserva">
             <div class="popup" id="popup2">
                 <a href="#" id="btn-cerrar-popup" class="btn-cerrarPop"><i class="fas fa-times"></i></a>
-                <h3>Modificar reserva</h3>
+                <h3>Cancelar/Finalizar reserva</h3>
                 <form METHOD='POST'  class="editarReserva" action="../services/acabar-reserva.php">
                     <input type="hidden" id="idMesa" class="idMesa" name="idMesa">
-                    <select name="accion">
-                        <option value="finalizar">Finalizar</option>
-                        <option value="cancelar">Cancelar</option>
-                    </select>
-                    <input type="submit" value="Guardar" class="btn">
+                    <input type="hidden" name="accion" value="finalizar">
+                    <input type="submit" value="Finalizar" class="btn">
                 </form>
             </div>
         </div>

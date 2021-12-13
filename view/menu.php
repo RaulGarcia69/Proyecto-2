@@ -11,6 +11,18 @@
         $salas=$pdo->prepare("SELECT * from tbl_sala");
         $salas->execute();
         $salas=$salas->fetchAll(PDO::FETCH_ASSOC);
+        $date = date('Y-m-d');
+        $hour = date('H:i:s');
+
+        if (isset($_REQUEST['day']) and isset($_REQUEST['hour']))
+        {
+            $fecha = $_REQUEST['day'];
+            $hora = $_REQUEST['hour'];
+        }
+        else {
+            $fecha=$date;
+            $hora=$hour;
+        }
         ?>
         
 <html lang="en">
@@ -30,9 +42,31 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="menu">
-   
+        <div class="fechas-menu">
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 0 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 0 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 0 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 1 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 1 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 1 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 2 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 2 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 2 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 3 days'))){echo "fecha-selected";} ?>"> <a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 3 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 3 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 4 days'))){echo "fecha-selected";} ?>"> <a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 4 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 4 days')); ?></a></div>
+        </div>
+        <?php
+        $horas_bbdd=$pdo->prepare("SELECT * from tbl_horas_reservas");
+        $horas_bbdd->execute();
+        $horas_bbdd=$horas_bbdd->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        <div class="horas-menu">
+        <?php
+         foreach ($horas_bbdd as $horas_bbdd) {
+        ?>
+
+            <div class="hora-div <?php if($hora==$horas_bbdd['hora_hor']) {echo "hora-selected";} ?>"><a class="hora-boton" href="menu.php?day=<?php echo $fecha; ?>&hour=<?php echo $horas_bbdd['hora_hor']; ?>"><?php echo $horas_bbdd['hora_hor']; ?></a></div>
+        <?php
+         }
+        ?>
+        </div>
+        <div class="ahora"><a class="ahora-boton" href="menu.php?day=<?php echo $fecha; ?>&hour=<?php echo date('H:i:s', strtotime($hour. ' + 0 hours')); ?>">Ahora</a></div>
         
-        <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user"></i></a></div>
+        <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
    
     <div class="region-salas">
         <div class="grid-salas flex-cv">
@@ -61,7 +95,7 @@
             <form  method="post" action="../services/cookieMesa.php"><input class="enviar" type="hidden" name="hiddensala" value="<?php echo $salas['id_sal'] ?>"><input name="enviar" type="submit"></form>
                 <!-- <a href="sala2.php"></a> -->
                 <img src="../media/icons/<?php echo $salas['imagen_sal']?>" alt="">
-                <h2><?php echo $salas['nombre_sal'] ?></h2>
+                <h2 class="nombre-sala"><?php echo $salas['nombre_sal'] ?></h2>
                 <table>
                     <tbody>
                         <tr>
