@@ -7,6 +7,7 @@
         if(isset($_COOKIE["sala"])){
             $idsala = $_COOKIE["idsala"];
             $salas = $_COOKIE["sala"];
+            $fecha_entera = $_COOKIE["fecha_reserva"];
             $fecha = $_COOKIE["fecha"];
             $hora = $_COOKIE["hora"];
     ?>
@@ -41,45 +42,56 @@
                 $mesa=$mesa->fetchAll(PDO::FETCH_ASSOC);
 
                 foreach ($mesa as $mesa) {
+                    $estatus=$pdo->prepare("SELECT tbl_mesa.id_mes from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=? and tbl_mesa.id_mes=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=? and tbl_reserva.horaIni_res < ? and tbl_mesa.id_mes=?)");
+                    $estatus->bindParam(1, $fecha_entera);
+                    $estatus->bindParam(2, $idsala);
+                    $estatus->bindParam(3, $mesa['id_mes']);
+                    $estatus->bindParam(4, $fecha_entera);
+                    $estatus->bindParam(5, $idsala);
+                    $estatus->bindParam(6,  $fecha_entera);
+                    $estatus->bindParam(7,  $mesa['id_mes']);
+                    $estatus->execute();
+                    $estatus=$estatus->fetchall(PDO::FETCH_ASSOC);
+                    $num=count($estatus);
                 ?>
-               <div class="mesa btn-abrirPop mesasvg" data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php echo $mesa['status_mes']; ?>" >
+               <div class="mesa btn-abrirPop mesasvg" data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" >
                    
                     <?php
                     if($mesa['capacidad_mes'] ==2)
                     {
                         ?>
-                        <div><img  data-status="<?php echo $mesa['status_mes']; ?>" src="../media/mesa2.svg" alt="mesa 2 personas" class="mesa-2"></div>
+                        <div><img  data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" src="../media/mesa2.svg" alt="mesa 2 personas" class="mesa-2"></div>
                         
                         <?php
                     }
                     elseif($mesa['capacidad_mes'] ==4)
                     {
                         ?>
-                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php echo $mesa['status_mes']; ?>" class="mesa-4" src="../media/mesa4.svg" alt="mesa 4 personas"></div>
+                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" class="mesa-4" src="../media/mesa4.svg" alt="mesa 4 personas"></div>
                         <?php    
                     }
                     elseif($mesa['capacidad_mes'] ==6)
                     {
                         ?>
-                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php echo $mesa['status_mes']; ?>" class="mesa-6" src="../media/mesa6.svg" alt="mesa 6 personas"></div>
+                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" class="mesa-6" src="../media/mesa6.svg" alt="mesa 6 personas"></div>
                         <?php
                     }
                     elseif($mesa['capacidad_mes'] ==10)
                     {
                         ?>
-                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php echo $mesa['status_mes']; ?>" class="mesa-10" src="../media/mesa10.svg" alt="mesa 10 personas"></div>
+                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" class="mesa-10" src="../media/mesa10.svg" alt="mesa 10 personas"></div>
                         <?php
                     }
                     else
                     {
                         ?>
-                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php echo $mesa['status_mes']; ?>" class="mesa-4" src="../media/mesa4.svg" alt="mesa 4 personas"></div>
+                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" class="mesa-4" src="../media/mesa4.svg" alt="mesa 4 personas"></div>
                         <?php
                     }
                     ?>
                     <div><p>Mesa nº <?php echo $mesa['id_mes']; ?></p></div>
                     <div><p>Mesa de <?php echo $mesa['capacidad_mes']; ?></p></div>
-                    <div><p>Estado:  <?php echo $mesa['status_mes']; ?></p></div>
+                    <div><p>Estado:  <?php if($num==1){echo "Reservado";}else{echo $mesa['status_mes'];} ?></p></div>
 
 
                        
@@ -108,9 +120,10 @@
                     <input type="hidden" id="idMesa" class="idMesa" name="idMesa">
                     <label for="nombre">Nombre de reserva</label>
                     <input type="text" id="nombre" name="nombre">
-                    <input type="hidden" id="fecha" name="fecha" value="<?php echo $fecha; ?>">
-                    <label for="fecha">Hora final</label>
-                    <select name="hora_ini" class="select-horas">
+                    <input type="hidden" id="fecha_entera" name="fecha_ini" value="<?php echo $fecha_entera; ?>">
+                    <input type="hidden" id="fecha" name="fecha_fin" value="<?php echo $fecha; ?>">
+                    <label for="fecha">Hora final de reserva</label>
+                    <select name="hora_fin" class="select-horas">
                         <?php
                         foreach ($horas as $horas) {
                         ?>

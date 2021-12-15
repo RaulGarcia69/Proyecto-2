@@ -116,7 +116,7 @@
 
                 ?>
             <div class="sala" disabled="<?php if($fecha_ini<date('Y-m-d H:i')){echo "si";}?>">
-            <form  method="post" action="../services/cookieMesa.php"><input class="enviar" type="hidden" name="hiddensala" value="<?php echo $salas['id_sal'] ?>"><input class="enviar" type="hidden" name="fechareserva" value="<?php echo $fecha_ini; ?>"><input class="enviar" type="hidden" name="horareserva" value="<?php echo $hora; ?>"><input name="enviar" type="submit"></form>
+            <form  method="post" action="../services/cookieMesa.php"><input class="enviar" type="hidden" name="hiddensala" value="<?php echo $salas['id_sal'] ?>"><input class="enviar" type="hidden" name="fechareserva" value="<?php echo $fecha_ini; ?>"><input class="enviar" type="hidden" name="horareserva" value="<?php echo $hora; ?>"><input class="enviar" type="hidden" name="fecha" value="<?php echo $fecha; ?>"><input name="enviar" type="submit"></form>
                 <!-- <a href="sala2.php"></a> -->
                 <img src="../media/icons/<?php echo $salas['imagen_sal']?>" alt="">
                 <h2 class="nombre-sala"><?php echo $salas['nombre_sal'] ?></h2>

@@ -11,6 +11,11 @@ include '../services/mesa.php';
 $nombre = $_POST['nombre'];
 $responsable = $_SESSION['email'];
 $mesa = $_POST['idMesa'];
+$fecha_ini = $_POST['fecha_ini'];
+$fecha_fin = $_POST['fecha_fin'];
+$hora_fin = $_POST['hora_fin'];
+
+$fecha_fin=$fecha_fin." ".$hora_fin;
 
 $idusu=$pdo->prepare("SELECT * from tbl_usuario where tbl_usuario.email_use=?");
 $idusu->bindParam(1, $responsable);
@@ -25,16 +30,16 @@ echo $responsable;
 
 
 
-$stmt=$pdo->prepare("INSERT INTO `tbl_reserva` (`id_res`, `horaIni_res`, `horaFin_res`, `datos_res`, `id_use_fk`, `id_mes_fk`) VALUES (NULL, NOW(), NULL, ?, ?, ?)");
-$stmt->bindParam(1, $nombre);
-$stmt->bindParam(2, $responsable);
-$stmt->bindParam(3, $mesa);
+$stmt=$pdo->prepare("INSERT INTO `tbl_reserva` (`id_res`, `horaIni_res`, `horaFin_res`, `datos_res`, `id_use_fk`, `id_mes_fk`) VALUES (NULL, ?, ?, ?, ?, ?)");
+$stmt->bindParam(1, $fecha_ini);
+$stmt->bindParam(2, $fecha_fin);
+$stmt->bindParam(3, $nombre);
+$stmt->bindParam(4, $responsable);
+$stmt->bindParam(5, $mesa);
 $stmt->execute();
 
 
-$stmt2=$pdo->prepare("UPDATE `tbl_mesa` SET `status_mes` = 'Ocupado/Reservado' WHERE `tbl_mesa`.`id_mes` = ?");
-$stmt2->bindParam(1, $mesa);
-$stmt2->execute();
+
 
 
 

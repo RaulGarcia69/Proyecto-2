@@ -47,13 +47,13 @@ $(document).ready(function() {
     })
 
     $(".mesa img").each(function(index) {
-            if ($(this).attr("data-status") == "Reservado") {
-                $(this).addClass('reservada');
+        if ($(this).attr("data-status") == "Reservado") {
+            $(this).addClass('reservada');
 
-            }
+        }
 
-        })
-        //cambiar esto de abajo
+    })
+
     $(".mesa").each(function(index) {
         if ($(this).attr("data-status") == "Ocupado/Reservado" || $(this).attr("data-status") == "Reservado") {
             $(this).removeClass('btn-abrirPop');
