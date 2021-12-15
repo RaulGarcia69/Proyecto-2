@@ -26,6 +26,9 @@
         if (isset($_REQUEST['ahora'])) {
             $ahora = $_REQUEST['ahora'];
         }
+        else {
+            $ahora = 0;
+        }
         ?>
         
 <html lang="en">
@@ -46,11 +49,11 @@
 </head>
 <body class="menu">
         <div class="fechas-menu">
-            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 0 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 0 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 0 days')); ?></a></div>
-            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 1 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 1 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 1 days')); ?></a></div>
-            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 2 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 2 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 2 days')); ?></a></div>
-            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 3 days'))){echo "fecha-selected";} ?>"> <a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 3 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 3 days')); ?></a></div>
-            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 4 days'))){echo "fecha-selected";} ?>"> <a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 4 days')); ?>&hour=<?php echo $hora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 4 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 0 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 0 days')); ?>&hour=<?php echo $hora; ?>&ahora=<?php echo $ahora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 0 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 1 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 1 days')); ?>&hour=<?php echo $hora; ?>&ahora=<?php echo $ahora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 1 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 2 days'))){echo "fecha-selected";} ?>"><a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 2 days')); ?>&hour=<?php echo $hora; ?>&ahora=<?php echo $ahora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 2 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 3 days'))){echo "fecha-selected";} ?>"> <a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 3 days')); ?>&hour=<?php echo $hora; ?>&ahora=<?php echo $ahora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 3 days')); ?></a></div>
+            <div class="fecha-div <?php if($fecha==date('Y-m-d', strtotime($date. ' + 4 days'))){echo "fecha-selected";} ?>"> <a class="fecha-boton" href="menu.php?day=<?php echo date('Y-m-d', strtotime($date. ' + 4 days')); ?>&hour=<?php echo $hora; ?>&ahora=<?php echo $ahora; ?>"><?php echo date('Y/m/d', strtotime($date. ' + 4 days')); ?></a></div>
         </div>
         <?php
         $horas_bbdd=$pdo->prepare("SELECT * from tbl_horas_reservas limit 26");
@@ -62,12 +65,12 @@
          foreach ($horas_bbdd as $horas_bbdd) {
         ?>
 
-            <div class="hora-div <?php if($hora==$horas_bbdd['hora_hor']) {echo "hora-selected";} ?>"><a class="hora-boton" href="menu.php?day=<?php echo $fecha; ?>&hour=<?php echo $horas_bbdd['hora_hor']; ?>"><?php echo $horas_bbdd['hora_hor']; ?></a></div>
+            <div class="hora-div <?php if($hora==$horas_bbdd['hora_hor']) {echo "hora-selected";} ?>" disabled="<?php if($fecha." ".$horas_bbdd['hora_hor']<date('Y-m-d H:i:s')){echo "si";}?>"><a class="hora-boton" href="menu.php?day=<?php echo $fecha; ?>&hour=<?php echo $horas_bbdd['hora_hor']; ?>&ahora=0"><?php echo $horas_bbdd['hora_hor']; ?></a></div>
         <?php
          }
         ?>
         </div>
-        <div class="ahora <?php if(!isset($_REQUEST['day']) or isset($_REQUEST['ahora'])){echo "hora-selected";} ?>"><a class="ahora-boton" href="menu.php?day=<?php echo $fecha; ?>&hour=<?php echo date('H:i:s', strtotime($hour. ' + 0 hours')); ?>&ahora=1">Ahora</a></div>
+        <div class="ahora <?php if(!isset($_REQUEST['ahora']) or $_REQUEST['ahora']==1) {echo "hora-selected";}?>"><a class="ahora-boton" href="menu.php?day=<?php echo $fecha; ?>&hour=<?php echo date('H:i:s', strtotime($hour. ' + 0 hours')); ?>&ahora=1">Ahora</a></div>
         
         <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
    
@@ -80,37 +83,40 @@
         $salas=$salas->fetchAll(PDO::FETCH_ASSOC);
         foreach ($salas as $salas) {
 
-            $capacidad_libre=$pdo->prepare("SELECT ((SELECT SUM(tbl_mesa.capacidad_mes) from tbl_mesa where tbl_mesa.id_sal_fk=?)-(SELECT SUM(tbl_mesa.capacidad_mes) from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=?)))");
+            $capacidad_libre=$pdo->prepare("SELECT ((SELECT SUM(tbl_mesa.capacidad_mes) from tbl_mesa where tbl_mesa.id_sal_fk=?)-(SELECT SUM(tbl_mesa.capacidad_mes) from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=? and tbl_reserva.horaIni_res < ?)))");
             $capacidad_libre->bindParam(1, $salas['id_sal']);
             $capacidad_libre->bindParam(2, $fecha_ini);
             $capacidad_libre->bindParam(3, $salas['id_sal']);
             $capacidad_libre->bindParam(4, $fecha_ini);
             $capacidad_libre->bindParam(5, $salas['id_sal']);
+            $capacidad_libre->bindParam(6,  $fecha_ini);
             $capacidad_libre->execute();
             $capacidad_libre = $capacidad_libre->fetch(PDO::FETCH_NUM);
 
 
-            $mesas_libres=$pdo->prepare("SELECT ((SELECT COUNT(*) FROM tbl_mesa WHERE id_sal_fk=?)- (SELECT COUNT(*) from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=?)))");
+            $mesas_libres=$pdo->prepare("SELECT ((SELECT COUNT(*) FROM tbl_mesa WHERE id_sal_fk=?)- (SELECT COUNT(*) from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=? and tbl_reserva.horaIni_res < ?)))");
             $mesas_libres->bindParam(1, $salas['id_sal']);
             $mesas_libres->bindParam(2, $fecha_ini);
             $mesas_libres->bindParam(3, $salas['id_sal']);
             $mesas_libres->bindParam(4, $fecha_ini);
             $mesas_libres->bindParam(5, $salas['id_sal']);
+            $mesas_libres->bindParam(6,  $fecha_ini);
             $mesas_libres->execute();
             $mesas_libres=$mesas_libres->fetch(PDO::FETCH_NUM);
 
 
-            $mesas_ocupadas=$pdo->prepare("SELECT * from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=?)");
+            $mesas_ocupadas=$pdo->prepare("SELECT * from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=? and tbl_reserva.horaIni_res < ?)");
             $mesas_ocupadas->bindParam(1, $fecha_ini);
             $mesas_ocupadas->bindParam(2, $salas['id_sal']);
             $mesas_ocupadas->bindParam(3, $fecha_ini);
             $mesas_ocupadas->bindParam(4, $salas['id_sal']);
+            $mesas_ocupadas->bindParam(5, $fecha_ini);
             $mesas_ocupadas->execute();
             $mesas_ocupadas=$mesas_ocupadas->fetchAll(PDO::FETCH_ASSOC);
 
                 ?>
-            <div class="sala" >
-            <form  method="post" action="../services/cookieMesa.php"><input class="enviar" type="hidden" name="hiddensala" value="<?php echo $salas['id_sal'] ?>"><input name="enviar" type="submit"></form>
+            <div class="sala" disabled="<?php if($fecha_ini<date('Y-m-d H:i')){echo "si";}?>">
+            <form  method="post" action="../services/cookieMesa.php"><input class="enviar" type="hidden" name="hiddensala" value="<?php echo $salas['id_sal'] ?>"><input class="enviar" type="hidden" name="fechareserva" value="<?php echo $fecha_ini; ?>"><input class="enviar" type="hidden" name="horareserva" value="<?php echo $hora; ?>"><input name="enviar" type="submit"></form>
                 <!-- <a href="sala2.php"></a> -->
                 <img src="../media/icons/<?php echo $salas['imagen_sal']?>" alt="">
                 <h2 class="nombre-sala"><?php echo $salas['nombre_sal'] ?></h2>

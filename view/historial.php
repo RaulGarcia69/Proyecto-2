@@ -19,7 +19,7 @@
 </head>
 
 <body class="historial">
-        <div class="atras"><a href="menu.php"><i class="far fa-arrow-alt-square-left"></i></a></div>
+        <div class="atras"><a href="menu.php?ahora=1"><i class="far fa-arrow-alt-square-left"></i></a></div>
         <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
 <?php 
     $reserva=$pdo->prepare("SELECT r.id_res, r.horaIni_res, r.horaFin_res, r.datos_res, u.nombre_use, m.id_mes, s.nombre_sal

@@ -127,3 +127,51 @@ $(document).ready(function() {
 //     $("#popup2 #edad").val(age);
 //     $("#popup2 #id").val(id);
 // }
+
+
+//horas
+if (document.title == "Salas") {
+    refreshAt(11, 1, 0);
+    refreshAt(11, 31, 0);
+    refreshAt(12, 1, 0);
+    refreshAt(12, 31, 0);
+    refreshAt(13, 1, 0);
+    refreshAt(13, 31, 0);
+    refreshAt(14, 1, 0);
+    refreshAt(14, 31, 0);
+    refreshAt(15, 1, 0);
+    refreshAt(15, 31, 0);
+    refreshAt(16, 1, 0);
+    refreshAt(16, 31, 0);
+    refreshAt(17, 1, 0);
+    refreshAt(17, 31, 0);
+    refreshAt(18, 1, 0);
+    refreshAt(18, 31, 0);
+    refreshAt(19, 1, 0);
+    refreshAt(19, 31, 0);
+    refreshAt(20, 1, 0);
+    refreshAt(20, 31, 0);
+    refreshAt(21, 1, 0);
+    refreshAt(21, 31, 0);
+    refreshAt(22, 1, 0);
+    refreshAt(22, 31, 0);
+    refreshAt(23, 1, 0);
+    refreshAt(23, 31, 0);
+}
+
+function refreshAt(hours, minutes, seconds) {
+    var now = new Date();
+    var then = new Date();
+
+    if (now.getHours() > hours ||
+        (now.getHours() == hours && now.getMinutes() > minutes) ||
+        now.getHours() == hours && now.getMinutes() == minutes && now.getSeconds() >= seconds) {
+        then.setDate(now.getDate() + 1);
+    }
+    then.setHours(hours);
+    then.setMinutes(minutes);
+    then.setSeconds(seconds);
+
+    var timeout = (then.getTime() - now.getTime());
+    setTimeout(function() { window.location.href = "menu.php?ahora=1"; }, timeout);
+}

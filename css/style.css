@@ -80,7 +80,8 @@ body {
 
 body.menu,
 body.salass,
-body.historial {
+body.historial,
+body.admin {
     background: #264653;
 }
 
@@ -795,4 +796,77 @@ body.salass {
 
 .hora-selected a {
     background-color: #65ca36;
+}
+
+[disabled="si"] {
+    pointer-events: none;
+    opacity: 0.5;
+    transform: scale(1.0);
+}
+
+[disabled="si"] a {
+    background-color: #82fa4b;
+}
+
+
+/*admin*/
+
+.demo {
+    margin: 10% 25%;
+}
+
+.demo-posicion1,
+.demo-posicion2 {
+    float: left;
+    background: #E4BE9E;
+    border-radius: 3%;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+    text-align: center;
+    margin: 3%;
+}
+
+.demo-posicion2 {
+    left: 50%;
+}
+
+.demo-posicion1:hover,
+.demo-posicion2:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+.demo-posicion1 img,
+.demo-posicion2 img {
+    max-height: 100px;
+}
+
+.region-salas .grid-salas .sala table {
+    margin-top: 10px;
+}
+
+.demo-posicion2 table,
+.demo-posicion2 table th,
+.demo-posicion2 table td,
+.demo-posicion1 table,
+.demo-posicion1 table th,
+.demo-posicion1 table td {
+    border: 1px solid #264653;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.demo-posicion1 table th,
+.demo-posicion2 table th {
+    font-weight: bold;
+    text-align: left;
+    margin-right: 1px;
+}
+
+.demo-posicion1 h2,
+.demo-posicion2 h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }

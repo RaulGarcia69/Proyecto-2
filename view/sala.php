@@ -7,8 +7,8 @@
         if(isset($_COOKIE["sala"])){
             $idsala = $_COOKIE["idsala"];
             $salas = $_COOKIE["sala"];
-            $date = date('Y-m-d');
-            $hour = date('H:i:s');
+            $fecha = $_COOKIE["fecha"];
+            $hora = $_COOKIE["hora"];
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="salass">
-        <div class="atras"><a href="menu.php"><i class="far fa-arrow-alt-square-left"></i></a></div>
+        <div class="atras"><a href="menu.php?ahora=1"><i class="far fa-arrow-alt-square-left"></i></a></div>
         <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
     <div class="region-mesas flex-cv <?php echo $salas;?>">
             
@@ -95,7 +95,7 @@
 
     <?php 
         $horas=$pdo->prepare("SELECT * from tbl_horas_reservas where hora_hor>?");
-        $horas->bindParam(1, $hour);
+        $horas->bindParam(1, $hora);
         $horas->execute();
         $horas=$horas->fetchAll(PDO::FETCH_ASSOC);
     ?>
@@ -108,7 +108,7 @@
                     <input type="hidden" id="idMesa" class="idMesa" name="idMesa">
                     <label for="nombre">Nombre de reserva</label>
                     <input type="text" id="nombre" name="nombre">
-                    <input type="hidden" id="fecha" name="fecha" value="<?php echo $date; ?>">
+                    <input type="hidden" id="fecha" name="fecha" value="<?php echo $fecha; ?>">
                     <label for="fecha">Hora final</label>
                     <select name="hora_ini" class="select-horas">
                         <?php
@@ -118,6 +118,7 @@
                         <?php
                         }
                         ?>
+                        <option value="00:00:00">00:00:00</option>
                     </select>
                     <input type="submit" value="Reservar" class="btn">
                 </form>
