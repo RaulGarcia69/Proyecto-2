@@ -58,6 +58,7 @@ $(document).ready(function() {
         if ($(this).attr("data-status") == "Ocupado/Reservado" || $(this).attr("data-status") == "Reservado") {
             $(this).removeClass('btn-abrirPop');
             $(this).addClass('btn-abrirPop2');
+
         }
     })
 

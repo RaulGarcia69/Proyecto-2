@@ -352,7 +352,7 @@ body.salass {
 
 .region-mesas .mesa img.reservada {
     -webkit-filter: invert(33%) sepia(2%) saturate(2%) hue-rotate(358deg) brightness(93%) contrast(119%);
-    filter: invert(33%) sepia(2%) saturate(2%) hue-rotate(358deg) brightness(93%) contrast(119%);
+    filter: invert(33%) sepia(2%) saturate(2%) hue-rotate(358deg) brightness(60%) contrast(119%);
 }
 
 .region-mesas .mesa img.ocupada {

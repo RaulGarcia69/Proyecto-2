@@ -145,6 +145,7 @@
                 <h3>Cancelar/Finalizar reserva</h3>
                 <form METHOD='POST'  class="editarReserva" action="../services/acabar-reserva.php">
                     <input type="hidden" id="idMesa" class="idMesa" name="idMesa">
+                    <input type="hidden" id="fecha" class="fecha" name="fecha" value="<?php echo $fecha; ?>">
                     <input type="hidden" name="accion" value="finalizar">
                     <input type="submit" value="Finalizar" class="btn">
                 </form>
