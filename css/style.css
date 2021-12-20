@@ -897,3 +897,11 @@ body.salass {
 .crear-user select {
     margin-top: 3%;
 }
+
+.recursos {
+    position: absolute;
+    top: 45%;
+    left: 41%;
+    text-align: center;
+    color: white;
+}

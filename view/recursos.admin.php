@@ -54,46 +54,8 @@
 ?>
 <body class="admin">
     <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
-    <div class="demo">
-        <div class="evento demo-posicion1" onclick="location.href='recursos.admin.php';">
-            <img src="../media/icons/table.png">
-            <h2>Salas Restaurante</h2>
-            <table>
-            <tbody>
-            <tr>
-                <th>Cantidad de Salas: </th>
-                <td><?php echo $num_salas[0] ?> salas</td>
-            </tr>
-            <tr>
-                <th>Cantidad de mesas: </th>
-                <td><?php echo $cant_mesas[0] ?> mesas</td>
-            </tr>
-            <tr>
-                <th>Capacidad total: </th>
-                <td><?php echo $cant_total[0] ?> personas</td>
-            </tr>
-            </table>
-        </div>
-        <div class="evento demo-posicion2" onclick="location.href='users.admin.php';">
-            <img src="../media/icons/user.png">
-            <h2>Usuarios</h2>
-            <table>
-            <tbody>
-            <tr>
-                <th>Usuarios Camareros: </th>
-                <td><?php echo $usu_cam[0] ?> camareros</td>
-            </tr>
-            <tr>
-                <th>Usuarios Admin: </th>
-                <td><?php echo $usu_admin[0] ?> admins</td>
-            </tr>
-            <tr>
-                <th>Usuarios totales: </th>
-                <td><?php echo $usu_total[0] ?> usuarios</td>
-            </tr>
-            </table>
-        </div>
-    </div>
+    <div class="atras"><a href="admin.php"><i class="far fa-arrow-alt-square-left"></i></a></div>
+    <div class="recursos"><h1>No lo he hecho xd &#128526;</h1><small>No me ha dado tiempo &#128532;</small></div>
 </body>
 </html>
 
@@ -103,4 +65,5 @@
 {
     header("Location:../view/login.php");
 }
+
 ?>

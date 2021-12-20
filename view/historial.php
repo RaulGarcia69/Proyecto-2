@@ -109,7 +109,8 @@
         $querynombresal = "AND s.nombre_sal LIKE '%$nombre_sal%'";
         $queryGeneral = $queryGeneral.$querynombresal;
     }
-
+        $orderby=" order by horaIni_res desc";
+        $queryGeneral = $queryGeneral.$orderby;
         $reserva=$pdo->prepare($queryGeneral);
         $reserva->execute();
         $data = $reserva->fetchAll(PDO::FETCH_ASSOC);
