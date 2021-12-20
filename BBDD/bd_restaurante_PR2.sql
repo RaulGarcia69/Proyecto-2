@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-12-2021 a las 20:10:21
+-- Tiempo de generación: 20-12-2021 a las 15:44:53
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 7.4.24
 
@@ -18,8 +18,52 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `bd_restaurante_PR2`
+-- Base de datos: `bd_restaurante_pr2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_horas_reservas`
+--
+
+CREATE TABLE `tbl_horas_reservas` (
+  `id` int(11) NOT NULL,
+  `hora_hor` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tbl_horas_reservas`
+--
+
+INSERT INTO `tbl_horas_reservas` (`id`, `hora_hor`) VALUES
+(1, '11:00:00'),
+(2, '11:30:00'),
+(3, '12:00:00'),
+(4, '12:30:00'),
+(5, '13:00:00'),
+(6, '13:30:00'),
+(7, '14:00:00'),
+(8, '14:30:00'),
+(9, '15:00:00'),
+(10, '15:30:00'),
+(11, '16:00:00'),
+(12, '16:30:00'),
+(13, '17:00:00'),
+(14, '17:30:00'),
+(15, '18:00:00'),
+(16, '18:30:00'),
+(17, '19:00:00'),
+(18, '19:30:00'),
+(19, '20:00:00'),
+(20, '20:30:00'),
+(21, '21:00:00'),
+(22, '21:30:00'),
+(23, '22:00:00'),
+(24, '22:30:00'),
+(25, '23:00:00'),
+(26, '23:30:00'),
+(27, '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -29,7 +73,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_mesa` (
   `id_mes` int(11) NOT NULL,
-  `status_mes` enum('Libre','Mantenimiento','Ocupado/Reservado') NOT NULL,
+  `status_mes` enum('Libre','Reservado','Ocupado/Reservado') NOT NULL,
   `capacidad_mes` int(3) NOT NULL,
   `id_sal_fk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -82,9 +126,21 @@ INSERT INTO `tbl_mesa` (`id_mes`, `status_mes`, `capacidad_mes`, `id_sal_fk`) VA
 (41, 'Libre', 6, 4),
 (42, 'Libre', 2, 5),
 (43, 'Libre', 2, 5),
-(44, 'Ocupado/Reservado', 4, 5),
+(44, 'Libre', 4, 5),
 (45, 'Libre', 4, 5),
-(46, 'Libre', 4, 5);
+(46, 'Libre', 4, 5),
+(47, 'Libre', 2, 6),
+(48, 'Libre', 2, 6),
+(49, 'Libre', 2, 6),
+(50, 'Libre', 2, 6),
+(51, 'Libre', 2, 6),
+(52, 'Libre', 2, 6),
+(53, 'Libre', 2, 6),
+(54, 'Libre', 2, 6),
+(55, 'Libre', 4, 6),
+(56, 'Libre', 4, 6),
+(57, 'Libre', 4, 6),
+(58, 'Libre', 4, 6);
 
 -- --------------------------------------------------------
 
@@ -107,15 +163,31 @@ CREATE TABLE `tbl_reserva` (
 
 INSERT INTO `tbl_reserva` (`id_res`, `horaIni_res`, `horaFin_res`, `datos_res`, `id_use_fk`, `id_mes_fk`) VALUES
 (1, '2021-11-05 19:10:41', '2021-11-05 17:37:26', 'Loko', 2, 2),
-(3, '2021-11-05 17:04:34', '2021-11-05 17:30:02', 'Starkiller', 2, 8),
 (17, '2021-11-09 17:12:52', '2021-11-09 21:49:21', 'Halfonso', 1, 7),
 (18, '2021-11-09 17:13:40', '2021-12-09 18:33:57', 'QWERTY', 1, 43),
 (19, '2021-11-09 17:20:45', '2021-11-09 21:49:04', 'Raul69', 1, 16),
 (20, '2021-11-09 21:47:48', '2021-11-09 21:48:30', 'Su madre', 1, 37),
-(21, '2021-11-10 10:28:51', '2021-11-10 10:29:05', 'Vegetta', 1, 3),
-(22, '2021-11-10 10:29:57', NULL, 'Alberto el del', 1, 20),
-(23, '2021-11-10 15:57:25', NULL, 'Raul69420', 1, 14),
-(24, '2021-12-09 18:35:30', NULL, 'Solana', 1, 44);
+(21, '2021-11-10 10:28:51', '2021-12-19 21:01:11', 'Vegetta', 1, 3),
+(22, '2021-11-10 10:29:57', '2021-11-10 10:35:57', 'Alberto el del', 1, 20),
+(24, '2021-12-09 18:35:30', '2021-12-10 16:23:06', 'Solana', 1, 44),
+(25, '2021-12-10 16:29:21', '2021-12-10 16:37:27', 'XAVA', 1, 2),
+(26, '2021-12-11 21:21:15', '2021-12-11 21:23:33', 'Sol', 1, 2),
+(29, '2021-12-11 21:25:50', '2021-12-11 21:26:01', 'Prueba69', 1, 2),
+(32, '2021-12-12 18:03:32', '2021-12-12 19:03:32', 'Halfonso', 1, 2),
+(33, '2021-12-13 16:34:21', '2021-12-19 21:01:11', 'Core', 1, 3),
+(35, '2021-12-13 22:00:00', '2021-12-13 23:00:00', 'Matic', 1, 16),
+(38, '2021-12-15 18:00:00', '2021-12-15 19:00:00', 'Litecoin', 2, 45),
+(39, '2021-12-15 19:30:00', '2021-12-15 21:30:00', 'FTX', 1, 42),
+(41, '2021-12-15 19:01:00', '2021-12-15 20:00:00', 'Orto', 1, 4),
+(48, '2021-12-16 16:00:02', '2021-12-16 16:30:00', 'Bolso', 1, 23),
+(50, '2021-12-16 19:00:00', '2021-12-16 18:25:14', 'Willy', 1, 36),
+(51, '2021-12-16 18:08:36', '2021-12-16 18:25:14', 'Aaaa', 1, 36),
+(56, '2021-12-16 19:00:00', '2021-12-16 19:30:00', 'pepe', 1, 25),
+(60, '2021-12-19 17:24:59', '2021-12-19 17:30:00', 'Left 4 dead', 1, 1),
+(62, '2021-12-19 17:35:00', '2021-12-19 18:00:00', 'Sr Tonto', 1, 5),
+(64, '2021-12-19 21:00:00', '2021-12-19 21:01:11', 'atacad', 1, 3),
+(65, '2021-12-19 18:30:00', '2021-12-19 18:57:28', 'jajaha', 1, 26),
+(66, '2021-12-19 22:00:00', '2021-12-19 23:00:00', 'masturbante', 1, 14);
 
 -- --------------------------------------------------------
 
@@ -174,12 +246,17 @@ INSERT INTO `tbl_usuario` (`id_use`, `nombre_use`, `email_use`, `pwd_use`, `tipo
 (11, 'Admin4', 'admin4@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Admin'),
 (12, 'Admin5', 'admin5@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Admin'),
 (13, 'admin6', 'admin6@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Admin'),
-(14, 'Alex', 'alexadmin@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Admin'),
 (15, 'alan', 'alan@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Admin');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `tbl_horas_reservas`
+--
+ALTER TABLE `tbl_horas_reservas`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `tbl_mesa`
@@ -213,16 +290,22 @@ ALTER TABLE `tbl_usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `tbl_horas_reservas`
+--
+ALTER TABLE `tbl_horas_reservas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
 -- AUTO_INCREMENT de la tabla `tbl_mesa`
 --
 ALTER TABLE `tbl_mesa`
-  MODIFY `id_mes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_mes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_reserva`
 --
 ALTER TABLE `tbl_reserva`
-  MODIFY `id_res` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_res` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_sala`
@@ -234,7 +317,7 @@ ALTER TABLE `tbl_sala`
 -- AUTO_INCREMENT de la tabla `tbl_usuario`
 --
 ALTER TABLE `tbl_usuario`
-  MODIFY `id_use` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_use` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restricciones para tablas volcadas
