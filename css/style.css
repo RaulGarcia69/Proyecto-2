@@ -870,3 +870,30 @@ body.salass {
     margin-bottom: 10px;
     font-weight: bold;
 }
+
+.hora-sala {
+    position: absolute;
+    top: 45%;
+    left: 1%;
+    font-size: 2.8vh;
+    color: white;
+    text-align: center;
+}
+
+.boton-filtro {
+    padding: 5px;
+    border: 3px solid #264653;
+    border-radius: 3%;
+}
+
+.crear-user label {
+    margin-bottom: 0%;
+}
+
+.crear-user input {
+    margin-top: 0%;
+}
+
+.crear-user select {
+    margin-top: 3%;
+}

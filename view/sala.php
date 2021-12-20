@@ -31,6 +31,17 @@
 <body class="salass">
         <div class="atras"><a href="menu.php?ahora=1"><i class="far fa-arrow-alt-square-left"></i></a></div>
         <div class="logout"><a href="../services/kill-login.php"><i class="fas fa-user-circle"></i></a></div>
+
+
+        <?php
+        $hora_sala=$pdo->prepare("SELECT nombre_sal FROM `tbl_sala` where id_sal=?");
+        $hora_sala->bindParam(1, $idsala);
+        $hora_sala->execute();
+        $hora_sala=$hora_sala->fetch(PDO::FETCH_NUM);
+        ?>
+
+
+        <div class="hora-sala"><h4><?php echo $hora_sala[0];?></h4><h4><?php echo $fecha_entera;?></h4></div>
     <div class="region-mesas flex-cv <?php echo $salas;?>">
             
             <div class="grid-mesas">
@@ -42,56 +53,66 @@
                 $mesa=$mesa->fetchAll(PDO::FETCH_ASSOC);
 
                 foreach ($mesa as $mesa) {
-                    $estatus=$pdo->prepare("SELECT tbl_mesa.id_mes from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=? and tbl_mesa.id_mes=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=? and tbl_reserva.horaIni_res < ? and tbl_mesa.id_mes=?)");
+                    $estatus=$pdo->prepare("SELECT tbl_mesa.id_mes from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where (tbl_reserva.horaIni_res = ? and tbl_mesa.id_sal_fk=? and tbl_reserva.horaFin_res>? and tbl_mesa.id_mes=?) or (tbl_reserva.horaFin_res > ? and tbl_mesa.id_sal_fk=? and tbl_reserva.horaIni_res < ? and tbl_mesa.id_mes=?)");
                     $estatus->bindParam(1, $fecha_entera);
                     $estatus->bindParam(2, $idsala);
-                    $estatus->bindParam(3, $mesa['id_mes']);
-                    $estatus->bindParam(4, $fecha_entera);
-                    $estatus->bindParam(5, $idsala);
-                    $estatus->bindParam(6,  $fecha_entera);
-                    $estatus->bindParam(7,  $mesa['id_mes']);
+                    $estatus->bindParam(3, $fecha_entera);
+                    $estatus->bindParam(4, $mesa['id_mes']);
+                    $estatus->bindParam(5, $fecha_entera);
+                    $estatus->bindParam(6, $idsala);
+                    $estatus->bindParam(7,  $fecha_entera);
+                    $estatus->bindParam(8,  $mesa['id_mes']);
                     $estatus->execute();
                     $estatus=$estatus->fetchall(PDO::FETCH_ASSOC);
                     $num=count($estatus);
+
+                    $estatus2=$pdo->prepare("SELECT tbl_reserva.id_res FROM `tbl_reserva` where tbl_reserva.horaIni_res<CURRENT_TIMESTAMP and tbl_reserva.horaFin_res>CURRENT_TIMESTAMP and id_mes_fk=?");
+                    $estatus2->bindParam(1, $mesa['id_mes']);
+                    $estatus2->execute();
+                    $estatus2=$estatus2->fetchAll(PDO::FETCH_ASSOC);
+                    $num2=count($estatus2);
+
+
+
                 ?>
-               <div class="mesa btn-abrirPop mesasvg" data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" >
+               <div class="mesa btn-abrirPop mesasvg" data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1 and $num2==1){echo "Ocupado/Reservado";}elseif($num==1 and $num2!=1){echo "Reservado";}else{echo $mesa['status_mes'];} ?>" >
                    
                     <?php
                     if($mesa['capacidad_mes'] ==2)
                     {
                         ?>
-                        <div><img  data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" src="../media/mesa2.svg" alt="mesa 2 personas" class="mesa-2"></div>
+                        <div><img  data-status="<?php if($num==1 and $num2==1){echo "Ocupado/Reservado";}elseif($num==1 and $num2!=1){echo "Reservado";}else{echo $mesa['status_mes'];} ?>" src="../media/mesa2.svg" alt="mesa 2 personas" class="mesa-2"></div>
                         
                         <?php
                     }
                     elseif($mesa['capacidad_mes'] ==4)
                     {
                         ?>
-                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" class="mesa-4" src="../media/mesa4.svg" alt="mesa 4 personas"></div>
+                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1 and $num2==1){echo "Ocupado/Reservado";}elseif($num==1 and $num2!=1){echo "Reservado";}else{echo $mesa['status_mes'];} ?>" class="mesa-4" src="../media/mesa4.svg" alt="mesa 4 personas"></div>
                         <?php    
                     }
                     elseif($mesa['capacidad_mes'] ==6)
                     {
                         ?>
-                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" class="mesa-6" src="../media/mesa6.svg" alt="mesa 6 personas"></div>
+                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1 and $num2==1){echo "Ocupado/Reservado";}elseif($num==1 and $num2!=1){echo "Reservado";}else{echo $mesa['status_mes'];} ?>" class="mesa-6" src="../media/mesa6.svg" alt="mesa 6 personas"></div>
                         <?php
                     }
                     elseif($mesa['capacidad_mes'] ==10)
                     {
                         ?>
-                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" class="mesa-10" src="../media/mesa10.svg" alt="mesa 10 personas"></div>
+                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1 and $num2==1){echo "Ocupado/Reservado";}elseif($num==1 and $num2!=1){echo "Reservado";}else{echo $mesa['status_mes'];} ?>" class="mesa-10" src="../media/mesa10.svg" alt="mesa 10 personas"></div>
                         <?php
                     }
                     else
                     {
                         ?>
-                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1){echo "Reservado";}elseif($mesa['status_mes']=="Ocupado/Reservado"){echo $mesa['status_mes'];} ?>" class="mesa-4" src="../media/mesa4.svg" alt="mesa 4 personas"></div>
+                        <div><img data-id="<?php echo $mesa['id_mes']; ?>" data-status="<?php if($num==1 and $num2==1){echo "Ocupado/Reservado";}elseif($num==1 and $num2!=1){echo "Reservado";}else{echo $mesa['status_mes'];} ?>" class="mesa-4" src="../media/mesa4.svg" alt="mesa 4 personas"></div>
                         <?php
                     }
                     ?>
                     <div><p>Mesa nº <?php echo $mesa['id_mes']; ?></p></div>
                     <div><p>Mesa de <?php echo $mesa['capacidad_mes']; ?></p></div>
-                    <div><p>Estado:  <?php if($num==1){echo "Reservado";}else{echo $mesa['status_mes'];} ?></p></div>
+                    <div><p>Estado:  <?php if($num==1 and $num2==1){echo "Ocupado";}elseif($num==1 and $num2!=1){echo "Reservado";}else{echo $mesa['status_mes'];} ?></p></div>
 
 
                        
@@ -106,10 +127,8 @@
     </div>
 
     <?php 
-        $horas=$pdo->prepare("SELECT * from tbl_horas_reservas where hora_hor>?");
-        $horas->bindParam(1, $hora);
-        $horas->execute();
-        $horas=$horas->fetchAll(PDO::FETCH_ASSOC);
+        
+        
     ?>
     <div class="overlay" id="overlay">
         <div class="abrirReserva" id="abrirReserva">
@@ -123,6 +142,37 @@
                     <input type="hidden" id="fecha_entera" name="fecha_ini" value="<?php echo $fecha_entera; ?>">
                     <input type="hidden" id="fecha" name="fecha_fin" value="<?php echo $fecha; ?>">
                     <label for="fecha">Hora final de reserva</label>
+                    <?php
+                    //la cookie se cambia pero la pdo ya se ejecutó con el valor de la cookie anterior, asi que no es óptimo
+                    if(isset($_COOKIE["mesa"])){
+                        $mesa = $_COOKIE["mesa"];
+                    }
+                    $reservas_quedan=$pdo->prepare("SELECT horaIni_res FROM `tbl_reserva` WHERE horaIni_res>? and id_mes_fk=?");
+                    $reservas_quedan->bindParam(1, $fecha_entera);
+                    $reservas_quedan->bindParam(2, $mesa);
+                    $reservas_quedan->execute();
+                    $reservas_quedan=$reservas_quedan->fetchAll(PDO::FETCH_ASSOC);
+                    $num=count($reservas_quedan);
+                    if($num>0){
+                        foreach ($reservas_quedan as $reservas_quedan) {
+                            $final=$reservas_quedan['horaIni_res'];
+                        }
+                    }
+                    else{
+                        $final="23:59:00";
+                    }
+                    
+                    
+                    $horas=$pdo->prepare("SELECT * from tbl_horas_reservas where hora_hor>? and hora_hor<=?");
+                    $horas->bindParam(1, $hora);
+                    $horas->bindParam(2, $final);
+                    $horas->execute();
+                    $horas=$horas->fetchAll(PDO::FETCH_ASSOC);
+                    
+
+
+
+                    ?>
                     <select name="hora_fin" class="select-horas">
                         <?php
                         foreach ($horas as $horas) {
@@ -130,8 +180,13 @@
                         <option value="<?php echo $horas['hora_hor']; ?>"><?php echo $horas['hora_hor']; ?></option>
                         <?php
                         }
+                        if($num<1){
                         ?>
                         <option value="00:00:00">00:00:00</option>
+                        <?php
+                        }
+                        
+                        ?>
                     </select>
                     <input type="submit" value="Reservar" class="btn">
                 </form>
@@ -145,7 +200,7 @@
                 <h3>Cancelar/Finalizar reserva</h3>
                 <form METHOD='POST'  class="editarReserva" action="../services/acabar-reserva.php">
                     <input type="hidden" id="idMesa" class="idMesa" name="idMesa">
-                    <input type="hidden" id="fecha" class="fecha" name="fecha" value="<?php echo $fecha; ?>">
+                    <input type="hidden" id="fecha" class="fecha" name="fecha" value="<?php echo $fecha_entera; ?>">
                     <input type="hidden" name="accion" value="finalizar">
                     <input type="submit" value="Finalizar" class="btn">
                 </form>

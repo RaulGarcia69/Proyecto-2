@@ -75,6 +75,8 @@ $(document).ready(function() {
         $(this).click(function() {
             $(".crearReserva .idMesa").val($(this).attr('data-id'))
             console.log($(this).attr('data-id'))
+            let mesa = $(this).attr('data-id')
+            document.cookie = 'mesa=' + mesa + ''
         });
     })
     $(".btn-abrirPop2").each(function(index) {

@@ -12,8 +12,9 @@ $cancelar_reserva=$pdo->prepare("SELECT * from tbl_mesa INNER JOIN tbl_reserva o
 $cancelar_reserva->bindParam(1, $fecha);
 $cancelar_reserva->bindParam(2, $mesa);
 $cancelar_reserva->execute();
-$cancelar_reserva=$cancelar_reserva->fetchAll(PDO::FETCH_ASSOC);
+$cancelar_reserva=$cancelar_reserva->fetchall(PDO::FETCH_ASSOC);
 $num=count($cancelar_reserva);
+
 if($num==1)
 {
     $stmt=$pdo->prepare("DELETE FROM tbl_reserva WHERE tbl_reserva.id_mes_fk=?");

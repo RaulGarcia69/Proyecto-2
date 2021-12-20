@@ -22,3 +22,13 @@ SELECT * from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_
 
 acabar o cancelar reserva
 SELECT * from tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk WHERE tbl_reserva.horaIni_res>"2021-12-16 15:30:00"
+
+
+eventos
+
+CREATE EVENT reserva_inicio
+  ON SCHEDULE
+    EVERY 1 MINUTE
+    STARTS CURRENT_TIMESTAMP
+  DO
+UPDATE `tbl_mesa` SET tbl_mesa.status_mes="Ocupado/Reservado" FROM tbl_mesa INNER JOIN tbl_reserva on tbl_mesa.id_mes=tbl_reserva.id_mes_fk where tbl_reserva.horaIni_res="2021-12-16 16:31:01" and tbl_mesa.id_mes=(SELECT tbl_reserva.id_mes_fk from tbl_reserva where tbl_reserva.horaIni_res="2021-12-16 16:31:01");

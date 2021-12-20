@@ -74,7 +74,7 @@
             </tr>
             </table>
         </div>
-        <div class="evento demo-posicion2" onclick="location.href='login.php';">
+        <div class="evento demo-posicion2" onclick="location.href='users.admin.php';">
             <img src="../media/icons/user.png">
             <h2>Usuarios</h2>
             <table>
